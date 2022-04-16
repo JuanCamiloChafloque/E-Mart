@@ -1,9 +1,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const path = require("path");
 const db = require("./config/database");
 
 //Routes
+const products = require("./routes/products.js");
 
 //Middlewares
 dotenv.config();
@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 
 //Routes Initialization
+app.use("/api/v1/products", products);
 
 //Port listener
 app.listen(
