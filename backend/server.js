@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const db = require("./config/database");
+const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./middleware/errors");
 
 //Routes
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 //JSON Parser middleware
 app.use(express.json());
+app.use(cookieParser());
 
 //Routes Initialization
 app.use("/api/v1/products", products);
