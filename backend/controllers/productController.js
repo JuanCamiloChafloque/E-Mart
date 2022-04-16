@@ -18,7 +18,9 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 //@route    GET /api/v1/products?keyword=
 //@access   public
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-  const apiFeatures = new ApiFeatures(Product.find({}), req.query).search();
+  const apiFeatures = new ApiFeatures(Product.find({}), req.query)
+    .search()
+    .filter();
   const products = await apiFeatures.query;
   res
     .status(200)
