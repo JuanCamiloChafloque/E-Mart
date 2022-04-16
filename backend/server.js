@@ -4,7 +4,8 @@ const db = require("./config/database");
 const errorMiddleware = require("./middleware/errors");
 
 //Routes
-const products = require("./routes/products.js");
+const products = require("./routes/products");
+const auth = require("./routes/auth");
 
 //Middlewares
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.json());
 
 //Routes Initialization
 app.use("/api/v1/products", products);
+app.use("/api/v1/auth", auth);
 
 //Error middleware
 app.use(errorMiddleware);
