@@ -48,6 +48,59 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
+//@desc     Current Logged in user
+//@route    GET /api/v1/auth/me
+//@access   private
+exports.getCurrentUserProfile = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  res.status(200).json({ success: true, user: user });
+});
+
+//@desc     Update password for Logged in user
+//@route    PUT /api/v1/auth/me/password
+//@access   private
+exports.updateCurrentUserPassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
+
+  if (!req.body.oldPassword || !req.body.password) {
+    return next(
+      new ErrorHandler("Please enter your old and new password", 400)
+    );
+  }
+
+  const isMatched = await user.comparePassword(req.body.oldPassword);
+  if (!isMatched) {
+    return next(new ErrorHandler("Old password is incorrect", 400));
+  }
+
+  user.password = req.body.password;
+  await user.save();
+  sendToken(user, 200, res);
+});
+
+//@desc     Update profile for Logged in user
+//@route    PUT /api/v1/auth/me
+//@access   private
+exports.updateCurrentUser = catchAsyncErrors(async (req, res, next) => {
+  if (!req.body.name || !req.body.email) {
+    return next(new ErrorHandler("Please enter your name and email", 400));
+  }
+
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  //TODO: Avatar
+
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({ success: true, message: "Profile updated" });
+});
+
 //@desc     Logout user
 //@route    GET /api/v1/auth/logout
 //@access   private

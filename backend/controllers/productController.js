@@ -5,7 +5,7 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 //@desc     Create new product
 //@route    POST /api/v1/products
-//@access   private
+//@access   private/admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user.id;
   const product = await Product.create(req.body);
@@ -48,7 +48,7 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
 
 //@desc     Update single product
 //@route    PUT /api/v1/products/:id
-//@access   private
+//@access   private/admin
 exports.updateSingleProduct = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
   if (!product) {
@@ -63,7 +63,7 @@ exports.updateSingleProduct = catchAsyncErrors(async (req, res, next) => {
 
 //@desc     Delete single product
 //@route    DELETE /api/v1/products/:id
-//@access   private
+//@access   private/admin
 exports.deleteSingleProduct = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
   if (!product) {
