@@ -50,6 +50,9 @@ exports.deleteSingleUser = catchAsyncErrors(async (req, res, next) => {
   if (!user) {
     return next(new ErrorHandler("User not found", 404));
   }
+
+  //TODO: Delete avatar from cloud
+
   await User.deleteOne({ _id: req.params.id });
   res.status(200).json({ success: true, message: "User deleted" });
 });
