@@ -4,17 +4,22 @@ import Product from "./products/Product";
 import Loader from "./layouts/Loader";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useAlert } from "react-alert";
 import { getProducts } from "../actions/productsActions";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const alert = useAlert();
   const { loading, products, error, productsCount } = useSelector(
     (state) => state.products
   );
 
   useEffect(() => {
+    if (error) {
+      return alert.error(error);
+    }
     dispatch(getProducts());
-  }, [dispatch]);
+  }, [dispatch, error, alert]);
 
   return (
     <>
