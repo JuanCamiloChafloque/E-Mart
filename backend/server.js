@@ -8,7 +8,7 @@ const errorMiddleware = require("./middleware/errors");
 const products = require("./routes/products");
 const auth = require("./routes/auth");
 const users = require("./routes/users");
-const ApiFeatures = require("./utils/apiFeatures");
+const orders = require("./routes/orders");
 
 //Middlewares
 dotenv.config();
@@ -25,6 +25,7 @@ app.use(cookieParser());
 app.use("/api/v1/products", products);
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/users", users);
+app.use("/api/v1/orders", orders);
 
 //Error middleware
 app.use(errorMiddleware);
