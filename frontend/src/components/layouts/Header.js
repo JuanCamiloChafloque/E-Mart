@@ -6,12 +6,13 @@ const Header = () => {
       <nav className="navbar row">
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
-            <strong style={{ color: "#ffffff" }}>E-Mart</strong>
             <img
               src="images/logo.png"
-              style={{ height: "30px", marginLeft: "5px" }}
+              style={{ height: "40px", marginRight: "8px" }}
               alt=""
             />
+            <strong style={{ color: "#febd69" }}>E-</strong>
+            <strong style={{ color: "#ffffff" }}>Mart</strong>
           </div>
         </div>
 
