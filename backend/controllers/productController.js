@@ -19,7 +19,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 //@route    GET /api/v1/products?keyword=
 //@access   public
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-  const resultsPerPage = 4;
+  const resultsPerPage = 8;
   const productCount = await Product.countDocuments();
 
   const apiFeatures = new ApiFeatures(Product.find({}), req.query)
@@ -29,8 +29,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   const products = await apiFeatures.query;
   res.status(200).json({
     success: true,
-    count: products.length,
-    productCount: productCount,
+    productsCount: productCount,
     products: products,
   });
 });
