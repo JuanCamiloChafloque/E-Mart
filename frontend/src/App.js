@@ -6,6 +6,7 @@ import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
 import Login from "./components/users/Login";
 import Register from "./components/users/Register";
+import Profile from "./components/users/Profile";
 import Home from "./components/Home";
 import ProductDetails from "./components/products/ProductDetails";
 import { loadUser } from "./actions/usersActions";
@@ -25,6 +26,7 @@ function App() {
             <Route path="/search/:keyword" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/me" element={<Profile />} />
             <Route path="/product/:id" element={<ProductDetails />} />
           </Routes>
         </div>
