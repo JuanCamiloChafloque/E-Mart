@@ -58,7 +58,7 @@ const Register = () => {
 
   return (
     <Fragment>
-      <MetaData title="Register | E-Mart Shop" />
+      <MetaData title="Register" />
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form

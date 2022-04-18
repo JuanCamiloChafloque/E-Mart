@@ -40,7 +40,7 @@ const Login = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="Login | E-Mart Shop" />
+          <MetaData title="Login" />
           <div className="row wrapper">
             <div className="col-10 col-lg-5">
               <form className="shadow-lg" onSubmit={submitLoginHandler}>
