@@ -8,6 +8,7 @@ import Footer from "./components/layouts/Footer";
 import Login from "./components/users/Login";
 import Register from "./components/users/Register";
 import Profile from "./components/users/Profile";
+import UpdateProfile from "./components/users/UpdateProfile";
 import Home from "./components/Home";
 import ProductDetails from "./components/products/ProductDetails";
 import { loadUser } from "./actions/usersActions";
@@ -32,6 +33,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/update/me"
+              element={
+                <ProtectedRoute>
+                  <UpdateProfile />
                 </ProtectedRoute>
               }
             />
