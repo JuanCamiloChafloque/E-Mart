@@ -17,7 +17,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "/api/v1/login",
+      "/api/v1/auth/login",
       { email, password },
       config
     );
@@ -29,4 +29,8 @@ export const login = (email, password) => async (dispatch) => {
       payload: err.response.data.message,
     });
   }
+};
+
+export const clearUserErrors = () => async (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
 };

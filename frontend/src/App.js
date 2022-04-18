@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
+import Login from "./components/users/Login";
 import Home from "./components/Home";
 import ProductDetails from "./components/products/ProductDetails";
 
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/search/:keyword" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/product/:id" element={<ProductDetails />} />
           </Routes>
         </div>
