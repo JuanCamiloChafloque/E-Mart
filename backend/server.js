@@ -4,6 +4,7 @@ const db = require("./config/database");
 const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./middleware/errors");
 const bodyParser = require("body-parser");
+const fileUpload = require("express-fileupload");
 const cloudinary = require("cloudinary");
 
 //Routes
@@ -23,10 +24,11 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(fileUpload());
 
 //Cloudinary config
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });

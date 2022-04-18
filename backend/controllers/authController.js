@@ -10,11 +10,19 @@ const cloudinary = require("cloudinary");
 //@route    POST /api/v1/auth/register
 //@access   public
 exports.register = catchAsyncErrors(async (req, res, next) => {
-  const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    folder: "avatars",
-    width: 150,
-    crop: "scale",
-  });
+  let result = {
+    public_id: "url",
+    secure_url: "url",
+  };
+
+  if (req.body.avatar) {
+    result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+  }
+
   const { name, email, password } = req.body;
   const user = await User.create({
     name,

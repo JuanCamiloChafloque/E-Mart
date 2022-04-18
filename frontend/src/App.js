@@ -3,6 +3,7 @@ import "./App.css";
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
 import Login from "./components/users/Login";
+import Register from "./components/users/Register";
 import Home from "./components/Home";
 import ProductDetails from "./components/products/ProductDetails";
 
@@ -16,6 +17,7 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route path="/search/:keyword" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/product/:id" element={<ProductDetails />} />
           </Routes>
         </div>
