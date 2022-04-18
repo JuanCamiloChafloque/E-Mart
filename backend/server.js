@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const db = require("./config/database");
 const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./middleware/errors");
+const bodyParser = require("body-parser");
+const cloudinary = require("cloudinary");
 
 //Routes
 const products = require("./routes/products");
@@ -19,7 +21,15 @@ const PORT = process.env.PORT || 5000;
 
 //JSON Parser middleware
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+//Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 //Routes Initialization
 app.use("/api/v1/products", products);
