@@ -20,21 +20,47 @@ const Home = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([1, 1000]);
+  const [category, setCategory] = useState("");
 
-  const { loading, products, error, productsCount, resPerPage } = useSelector(
-    (state) => state.products
-  );
+  const categories = [
+    "Electronics",
+    "Cameras",
+    "Laptops",
+    "Accessories",
+    "Headphones",
+    "Food",
+    "Books",
+    "Clothes/Shoes",
+    "Beauty/Health",
+    "Sports",
+    "Outdoor",
+    "Home",
+  ];
+
+  const {
+    loading,
+    products,
+    error,
+    productsCount,
+    resPerPage,
+    filteredProductsCount,
+  } = useSelector((state) => state.products);
 
   useEffect(() => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getProducts(keyword, currentPage, price));
-  }, [dispatch, error, alert, keyword, currentPage, price]);
+    dispatch(getProducts(keyword, currentPage, price, category));
+  }, [dispatch, error, alert, keyword, currentPage, price, category]);
 
   const setCurrentPageNumber = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  let count = productsCount;
+  if (keyword) {
+    count = filteredProductsCount;
+  }
 
   return (
     <>
@@ -60,6 +86,24 @@ const Home = () => {
                         value={price}
                         onChange={(price) => setPrice(price)}
                       />
+                      <hr className="my-5" />
+                      <div className="mt-5">
+                        <h4 className="mb-3">Categories</h4>
+                        <ul className="pl-0">
+                          {categories.map((category) => (
+                            <li
+                              key={category}
+                              onClick={() => setCategory(category)}
+                              style={{
+                                cursor: "pointer",
+                                listStyleType: "none",
+                              }}
+                            >
+                              {category}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
 
@@ -84,7 +128,7 @@ const Home = () => {
               )}
             </div>
           </section>
-          {resPerPage <= productsCount && (
+          {resPerPage <= count && (
             <div className="d-flex justify-content-center mt-5">
               <Pagination
                 activePage={currentPage}
