@@ -12,6 +12,7 @@ import {
   CardCvcElement,
 } from "@stripe/react-stripe-js";
 import CheckoutSteps from "./CheckoutSteps";
+import { createOrder, clearOrderErrors } from "../../actions/orderActions";
 
 const options = {
   style: {
@@ -33,12 +34,19 @@ const Payment = () => {
 
   const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
+  const { error } = useSelector((state) => state.newOrder);
+
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100),
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearOrderErrors());
+    }
+  }, [dispatch, alert, error]);
 
   const submitPaymentHandler = async (e) => {
     e.preventDefault();
@@ -71,7 +79,19 @@ const Payment = () => {
         alert.error(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
-          //TODO: Create new order
+          const order = {
+            orderItems: cartItems,
+            shippingInfo: shippingInfo,
+            itemsPrice: orderInfo.itemsPrice,
+            taxPrice: orderInfo.taxPrice,
+            shippingPrice: orderInfo.shippingPrice,
+            totalPrice: orderInfo.totalPrice,
+            paymentInfo: {
+              id: result.paymentIntent.id,
+              status: result.paymentIntent.status,
+            },
+          };
+          dispatch(createOrder(order));
           navigate("/success");
         } else {
           alert.error("There was some issue with the payment processing...");
