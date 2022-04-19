@@ -20,6 +20,7 @@ import ConfirmOrder from "./components/cart/ConfirmOrder";
 import Payment from "./components/cart/Payment";
 import OrderSuccess from "./components/cart/OrderSuccess";
 import ListOrders from "./components/orders/ListOrders";
+import OrderDetails from "./components/orders/OrderDetails";
 import Home from "./components/Home";
 import ProductDetails from "./components/products/ProductDetails";
 import { loadUser } from "./actions/usersActions";
@@ -120,6 +121,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ListOrders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/order/:id"
+              element={
+                <ProtectedRoute>
+                  <OrderDetails />
                 </ProtectedRoute>
               }
             />
