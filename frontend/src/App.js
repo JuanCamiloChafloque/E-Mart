@@ -10,6 +10,8 @@ import Register from "./components/users/Register";
 import Profile from "./components/users/Profile";
 import UpdateProfile from "./components/users/UpdateProfile";
 import UpdatePassword from "./components/users/UpdatePassword";
+import ForgotPassword from "./components/users/ForgotPassword";
+import NewPassword from "./components/users/NewPassword";
 import Home from "./components/Home";
 import ProductDetails from "./components/products/ProductDetails";
 import { loadUser } from "./actions/usersActions";
@@ -52,6 +54,12 @@ function App() {
                   <UpdatePassword />
                 </ProtectedRoute>
               }
+            />
+            <Route path="/password/forgot" element={<ForgotPassword />} exact />
+            <Route
+              path="/password/reset/:token"
+              element={<NewPassword />}
+              exact
             />
             <Route path="/product/:id" element={<ProductDetails />} />
           </Routes>

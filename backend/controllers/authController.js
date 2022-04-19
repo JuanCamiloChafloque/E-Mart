@@ -157,12 +157,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   //Create reset password URL
-  const resetURL =
-    req.protocol +
-    "://" +
-    req.get("host") +
-    "/api/v1/auth/password/reset/" +
-    resetToken;
+  const resetURL = process.env.FRONT_END_URL + "/password/reset/" + resetToken;
 
   const message =
     "Your password reset token is as follows: \n\n" +
@@ -196,8 +191,6 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     .createHash("sha256")
     .update(req.params.token)
     .digest("hex");
-
-  console.log(resetTokenHash);
 
   const user = await User.findOne({
     resetPasswordToken: resetTokenHash,
