@@ -6,7 +6,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 //@route    POST /api/v1/payments
 //@access   private
 exports.processPayment = catchAsyncErrors(async (req, res, next) => {
-  const paymentIntent = await stripe.paymentIntent.create({
+  const paymentIntent = await stripe.paymentIntents.create({
     amount: req.body.amount,
     currency: "usd",
     metadata: {
@@ -16,7 +16,7 @@ exports.processPayment = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    client_Secret: paymentIntent.client_Secret,
+    client_secret: paymentIntent.client_secret,
   });
 });
 

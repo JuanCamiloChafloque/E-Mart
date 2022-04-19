@@ -7,6 +7,9 @@ const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const cloudinary = require("cloudinary");
 
+//Dot ENV Init
+dotenv.config();
+
 //Routes
 const products = require("./routes/products");
 const auth = require("./routes/auth");
@@ -15,7 +18,6 @@ const orders = require("./routes/orders");
 const payments = require("./routes/payment");
 
 //Middlewares
-dotenv.config();
 db();
 
 const app = express();
