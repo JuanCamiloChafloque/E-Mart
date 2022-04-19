@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearUserErrors } from "../../actions/usersActions";
@@ -10,9 +10,14 @@ const Login = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const redirect = searchParams.get("redirect")
+    ? "/" + searchParams.get("redirect")
+    : "/";
 
   const { isAuthenticated, error, loading } = useSelector(
     (state) => state.auth
@@ -20,14 +25,14 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate(redirect);
     }
 
     if (error) {
       alert.error(error);
       dispatch(clearUserErrors());
     }
-  }, [isAuthenticated, error, alert, dispatch, navigate]);
+  }, [isAuthenticated, error, alert, dispatch, navigate, redirect]);
 
   const submitLoginHandler = (e) => {
     e.preventDefault();

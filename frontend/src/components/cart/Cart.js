@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
@@ -8,6 +8,7 @@ import MetaData from "../layouts/MetaData";
 const Cart = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
+  const navigate = useNavigate();
 
   const { cartItems } = useSelector((state) => state.cart);
 
@@ -26,6 +27,10 @@ const Cart = () => {
   const removeItemHandler = (id) => {
     dispatch(removeItemFromCart(id));
     alert.success("Item removed successfully...");
+  };
+
+  const checkoutHandler = () => {
+    navigate("/login?redirect=shipping");
   };
 
   return (
@@ -131,7 +136,11 @@ const Cart = () => {
                 </p>
 
                 <hr />
-                <button id="checkout_btn" className="btn btn-primary btn-block">
+                <button
+                  id="checkout_btn"
+                  className="btn btn-primary btn-block"
+                  onClick={checkoutHandler}
+                >
                   Check out
                 </button>
               </div>

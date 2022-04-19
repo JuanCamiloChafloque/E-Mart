@@ -13,6 +13,7 @@ import UpdatePassword from "./components/users/UpdatePassword";
 import ForgotPassword from "./components/users/ForgotPassword";
 import NewPassword from "./components/users/NewPassword";
 import Cart from "./components/cart/Cart";
+import Shipping from "./components/cart/Shipping";
 import Home from "./components/Home";
 import ProductDetails from "./components/products/ProductDetails";
 import { loadUser } from "./actions/usersActions";
@@ -64,6 +65,14 @@ function App() {
             />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
+            <Route
+              path="/shipping"
+              element={
+                <ProtectedRoute>
+                  <Shipping />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
         <Footer />
