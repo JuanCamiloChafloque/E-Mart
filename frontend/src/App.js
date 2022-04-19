@@ -19,6 +19,7 @@ import Shipping from "./components/cart/Shipping";
 import ConfirmOrder from "./components/cart/ConfirmOrder";
 import Payment from "./components/cart/Payment";
 import OrderSuccess from "./components/cart/OrderSuccess";
+import ListOrders from "./components/orders/ListOrders";
 import Home from "./components/Home";
 import ProductDetails from "./components/products/ProductDetails";
 import { loadUser } from "./actions/usersActions";
@@ -111,6 +112,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <OrderSuccess />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/orders/me"
+              element={
+                <ProtectedRoute>
+                  <ListOrders />
                 </ProtectedRoute>
               }
             />
