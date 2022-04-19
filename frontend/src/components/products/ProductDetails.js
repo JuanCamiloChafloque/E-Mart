@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
@@ -7,6 +7,7 @@ import {
   getProductDetails,
   clearProductErrors,
 } from "../../actions/productsActions";
+import { addItemToCart } from "../../actions/cartActions";
 import MetaData from "../layouts/MetaData";
 import Loader from "../layouts/Loader";
 
@@ -18,6 +19,8 @@ const ProductDetails = () => {
     (state) => state.productDetails
   );
 
+  const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -25,6 +28,25 @@ const ProductDetails = () => {
     }
     dispatch(getProductDetails(id));
   }, [dispatch, id, error, alert]);
+
+  const decreaseStockHandler = () => {
+    const count = document.querySelector(".count");
+    if (count.valueAsNumber <= 1) return;
+    const qty = count.valueAsNumber - 1;
+    setQuantity(qty);
+  };
+
+  const increaseStockHandler = () => {
+    const count = document.querySelector(".count");
+    if (count.valueAsNumber >= product.stock) return;
+    const qty = count.valueAsNumber + 1;
+    setQuantity(qty);
+  };
+
+  const addToCartHandler = () => {
+    dispatch(addItemToCart(id, quantity));
+    alert.success("Item Added to Cart");
+  };
 
   return (
     <>
@@ -74,21 +96,33 @@ const ProductDetails = () => {
 
               <p id="product_price">${product.price}</p>
               <div className="stockCounter d-inline">
-                <span className="btn btn-danger minus">-</span>
+                <span
+                  className="btn btn-danger minus"
+                  onClick={decreaseStockHandler}
+                >
+                  -
+                </span>
 
                 <input
                   type="number"
                   className="form-control count d-inline"
-                  value="1"
+                  value={quantity}
                   readOnly
                 />
 
-                <span className="btn btn-primary plus">+</span>
+                <span
+                  className="btn btn-primary plus"
+                  onClick={increaseStockHandler}
+                >
+                  +
+                </span>
               </div>
               <button
                 type="button"
                 id="cart_btn"
                 className="btn btn-primary d-inline ml-4"
+                onClick={addToCartHandler}
+                disabled={product.stock === 0}
               >
                 Add to Cart
               </button>
