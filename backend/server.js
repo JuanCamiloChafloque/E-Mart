@@ -12,6 +12,7 @@ const products = require("./routes/products");
 const auth = require("./routes/auth");
 const users = require("./routes/users");
 const orders = require("./routes/orders");
+const payments = require("./routes/payment");
 
 //Middlewares
 dotenv.config();
@@ -38,6 +39,7 @@ app.use("/api/v1/products", products);
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/users", users);
 app.use("/api/v1/orders", orders);
+app.use("/api/v1/payments", payments);
 
 //Error middleware
 app.use(errorMiddleware);
