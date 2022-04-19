@@ -12,6 +12,7 @@ import UpdateProfile from "./components/users/UpdateProfile";
 import UpdatePassword from "./components/users/UpdatePassword";
 import ForgotPassword from "./components/users/ForgotPassword";
 import NewPassword from "./components/users/NewPassword";
+import Cart from "./components/cart/Cart";
 import Home from "./components/Home";
 import ProductDetails from "./components/products/ProductDetails";
 import { loadUser } from "./actions/usersActions";
@@ -62,6 +63,7 @@ function App() {
               exact
             />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
           </Routes>
         </div>
         <Footer />
