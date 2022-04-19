@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartActions";
 import MetaData from "../layouts/MetaData";
+import CheckoutSteps from "./CheckoutSteps";
 import { countries } from "countries-list";
 
 const Shipping = () => {
@@ -27,7 +28,8 @@ const Shipping = () => {
 
   return (
     <Fragment>
-      <MetaData title="Shipping Info" />
+      <MetaData title="Shipping Information" />
+      <CheckoutSteps shipping />
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
