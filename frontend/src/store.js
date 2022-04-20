@@ -22,6 +22,7 @@ import {
   newOrderReducer,
   myOrdersReducer,
   orderDetailsReducer,
+  allOrdersReducer,
 } from "./reducers/orderReducers";
 
 const reducer = combineReducers({
@@ -36,6 +37,7 @@ const reducer = combineReducers({
   newOrder: newOrderReducer,
   myOrders: myOrdersReducer,
   orderDetails: orderDetailsReducer,
+  allOrders: allOrdersReducer,
   newReview: newReviewReducer,
 });
 
