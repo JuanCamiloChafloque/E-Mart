@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const path = require("path");
 const db = require("./config/database");
 const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./middleware/errors");
@@ -8,7 +9,9 @@ const fileUpload = require("express-fileupload");
 const cloudinary = require("cloudinary");
 
 //Dot ENV Init
-dotenv.config();
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
 
 //Routes
 const products = require("./routes/products");
@@ -45,6 +48,14 @@ app.use("/api/v1/payments", payments);
 
 //Error middleware
 app.use(errorMiddleware);
+
+//Build to deployment
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+  });
+}
 
 //Port listener
 const server = app.listen(

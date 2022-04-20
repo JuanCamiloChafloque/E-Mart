@@ -39,7 +39,7 @@ import ProductReviews from "./components/admin/ProductReviews";
 function App() {
   const [stripeApiKey, setStripeKey] = useState("");
 
-  const { loading, user } = useSelector((state) => state.auth);
+  const { loading, user, isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     store.dispatch(loadUser());
@@ -220,7 +220,7 @@ function App() {
             }
           />
         </Routes>
-        {!loading && user.role !== "admin" && <Footer />}
+        {!loading && (!isAuthenticated || user.role !== "admin") && <Footer />}
       </div>
     </Router>
   );
