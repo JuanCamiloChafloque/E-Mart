@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,7 +14,6 @@ import { MDBDataTable } from "mdbreact";
 const ProductsList = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { loading, error, products } = useSelector((state) => state.products);
 

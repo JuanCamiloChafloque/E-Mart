@@ -13,6 +13,9 @@ import {
   ADMIN_PRODUCTS_REQUEST,
   ADMIN_PRODUCTS_SUCCESS,
   ADMIN_PRODUCTS_FAIL,
+  NEW_PRODUCT_REQUEST,
+  NEW_PRODUCT_SUCCESS,
+  NEW_PRODUCT_FAIL,
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -118,6 +121,29 @@ export const createReview = (id, reviewData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: NEW_REVIEW_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const createProduct = (productData) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_PRODUCT_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    const { data } = await axios.post("/api/v1/products", productData, config);
+    dispatch({
+      type: NEW_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (err) {
+    dispatch({
+      type: NEW_PRODUCT_FAIL,
       payload: err.response.data.message,
     });
   }

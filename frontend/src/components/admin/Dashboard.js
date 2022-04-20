@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MetaData from "../layouts/MetaData";
-import Loader from "../layouts/Loader";
 import Sidebar from "./Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminProducts } from "../../actions/productsActions";
