@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const cloudinary = require("cloudinary");
 
 //@desc     Get all users
 //@route    GET /api/v1/users
@@ -51,7 +52,8 @@ exports.deleteSingleUser = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("User not found", 404));
   }
 
-  //TODO: Delete avatar from cloud
+  const image_id = user.avatar.public_id;
+  await cloudinary.v2.uploader.destroy(image_id);
 
   await User.deleteOne({ _id: req.params.id });
   res.status(200).json({ success: true, message: "User deleted" });
