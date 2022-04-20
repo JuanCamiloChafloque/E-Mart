@@ -31,6 +31,7 @@ import ProductsList from "./components/admin/ProductsList";
 import NewProduct from "./components/admin/NewProduct";
 import UpdateProduct from "./components/admin/UpdateProduct";
 import OrdersList from "./components/admin/OrdersList";
+import ProcessOrder from "./components/admin/ProcessOrder";
 
 function App() {
   const [stripeApiKey, setStripeKey] = useState("");
@@ -180,6 +181,14 @@ function App() {
             element={
               <ProtectedRoute isAdmin={true}>
                 <OrdersList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/order/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ProcessOrder />
               </ProtectedRoute>
             }
           />
