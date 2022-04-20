@@ -16,6 +16,9 @@ import {
   NEW_PRODUCT_REQUEST,
   NEW_PRODUCT_SUCCESS,
   NEW_PRODUCT_FAIL,
+  REMOVE_PRODUCT_REQUEST,
+  REMOVE_PRODUCT_SUCCESS,
+  REMOVE_PRODUCT_FAIL,
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -144,6 +147,23 @@ export const createProduct = (productData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: NEW_PRODUCT_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const deleteProduct = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: REMOVE_PRODUCT_REQUEST });
+
+    const { data } = await axios.delete("/api/v1/products/" + id);
+    dispatch({
+      type: REMOVE_PRODUCT_SUCCESS,
+      payload: data.success,
+    });
+  } catch (err) {
+    dispatch({
+      type: REMOVE_PRODUCT_FAIL,
       payload: err.response.data.message,
     });
   }

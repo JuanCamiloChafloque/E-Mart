@@ -1,29 +1,51 @@
 import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAdminProducts,
+  deleteProduct,
   clearProductErrors,
 } from "../../actions/productsActions";
 import MetaData from "../layouts/MetaData";
 import Sidebar from "./Sidebar";
 import Loader from "../layouts/Loader";
 import { MDBDataTable } from "mdbreact";
+import { REMOVE_PRODUCT_RESET } from "../../constants/productConstants";
 
 const ProductsList = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { loading, error, products } = useSelector((state) => state.products);
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.product
+  );
 
   useEffect(() => {
     dispatch(getAdminProducts());
+
     if (error) {
       alert.error(error);
       dispatch(clearProductErrors());
     }
-  }, [dispatch, error, alert]);
+
+    if (deleteError) {
+      alert.error(deleteError);
+      dispatch(clearProductErrors());
+    }
+
+    if (isDeleted) {
+      alert.success("Product deleted successfully...");
+      dispatch({ type: REMOVE_PRODUCT_RESET });
+      navigate("/admin/products");
+    }
+  }, [dispatch, error, deleteError, alert, isDeleted, navigate]);
+
+  const submitRemoveHandler = (id) => {
+    dispatch(deleteProduct(id));
+  };
 
   const setProducts = () => {
     const data = {
@@ -71,7 +93,10 @@ const ProductsList = () => {
             >
               <i className="fa fa-pencil"></i>
             </Link>
-            <button className="btn btn-danger py-1 px-2 ml-2">
+            <button
+              className="btn btn-danger py-1 px-2 ml-2"
+              onClick={() => submitRemoveHandler(product._id)}
+            >
               <i className="fa fa-trash"></i>
             </button>
           </>
