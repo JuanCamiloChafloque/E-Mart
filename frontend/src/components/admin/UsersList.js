@@ -12,7 +12,6 @@ import Sidebar from "./Sidebar";
 import Loader from "../layouts/Loader";
 import { MDBDataTable } from "mdbreact";
 import { REMOVE_USER_RESET } from "../../constants/userConstants";
-//import { REMOVE_USER_RESET } from "../../constants/usersConstants";
 
 const UsersList = () => {
   const alert = useAlert();
