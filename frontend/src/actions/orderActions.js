@@ -16,6 +16,9 @@ import {
   UPDATE_ORDER_REQUEST,
   UPDATE_ORDER_SUCCESS,
   UPDATE_ORDER_FAIL,
+  REMOVE_ORDER_REQUEST,
+  REMOVE_ORDER_SUCCESS,
+  REMOVE_ORDER_FAIL,
 } from "../constants/orderConstants";
 
 export const createOrder = (order) => async (dispatch) => {
@@ -95,6 +98,23 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: UPDATE_ORDER_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const deleteOrder = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: REMOVE_ORDER_REQUEST });
+
+    const { data } = await axios.delete("/api/v1/orders/" + id);
+    dispatch({
+      type: REMOVE_ORDER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (err) {
+    dispatch({
+      type: REMOVE_ORDER_FAIL,
       payload: err.response.data.message,
     });
   }

@@ -2,11 +2,16 @@ import React, { Fragment, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrders, clearOrderErrors } from "../../actions/orderActions";
+import {
+  getAllOrders,
+  deleteOrder,
+  clearOrderErrors,
+} from "../../actions/orderActions";
 import MetaData from "../layouts/MetaData";
 import Sidebar from "./Sidebar";
 import Loader from "../layouts/Loader";
 import { MDBDataTable } from "mdbreact";
+import { REMOVE_ORDER_RESET } from "../../constants/orderConstants";
 
 const OrdersList = () => {
   const alert = useAlert();
@@ -14,6 +19,7 @@ const OrdersList = () => {
   const navigate = useNavigate();
 
   const { loading, error, orders } = useSelector((state) => state.allOrders);
+  const { error: deleteError, isDeleted } = useSelector((state) => state.order);
 
   useEffect(() => {
     dispatch(getAllOrders());
@@ -23,16 +29,21 @@ const OrdersList = () => {
       dispatch(clearOrderErrors());
     }
 
-    /*if (isDeleted) {
-      alert.success("Product deleted successfully...");
-      dispatch({ type: REMOVE_PRODUCT_RESET });
-      navigate("/admin/products");
-    }*/
-  }, [dispatch, error, alert, navigate]);
+    if (deleteError) {
+      alert.error(deleteError);
+      dispatch(clearOrderErrors());
+    }
 
-  /*const submitRemoveHandler = (id) => {
-    dispatch(deleteProduct(id));
-  };*/
+    if (isDeleted) {
+      alert.success("Order deleted successfully...");
+      dispatch({ type: REMOVE_ORDER_RESET });
+      navigate("/admin/orders");
+    }
+  }, [dispatch, error, deleteError, alert, navigate, isDeleted]);
+
+  const submitRemoveHandler = (id) => {
+    dispatch(deleteOrder(id));
+  };
 
   const setOrders = () => {
     const data = {
@@ -88,7 +99,7 @@ const OrdersList = () => {
             </Link>
             <button
               className="btn btn-danger py-1 px-2 ml-2"
-              //onClick={() => submitRemoveHandler(product._id)}
+              onClick={() => submitRemoveHandler(order._id)}
             >
               <i className="fa fa-trash"></i>
             </button>
