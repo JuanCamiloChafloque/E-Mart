@@ -2,6 +2,9 @@ import {
   ALL_PRODUCTS_REQUEST,
   ALL_PRODUCTS_SUCCESS,
   ALL_PRODUCTS_FAIL,
+  ADMIN_PRODUCTS_REQUEST,
+  ADMIN_PRODUCTS_SUCCESS,
+  ADMIN_PRODUCTS_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
@@ -32,6 +35,27 @@ export const productsReducer = (state = { products: [] }, action) => {
     }
 
     case ALL_PRODUCTS_FAIL: {
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case ADMIN_PRODUCTS_REQUEST: {
+      return {
+        loading: true,
+        products: [],
+      };
+    }
+
+    case ADMIN_PRODUCTS_SUCCESS: {
+      return {
+        loading: false,
+        products: action.payload.products,
+      };
+    }
+
+    case ADMIN_PRODUCTS_FAIL: {
       return {
         loading: false,
         error: action.payload,

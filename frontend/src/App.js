@@ -23,6 +23,8 @@ import ListOrders from "./components/orders/ListOrders";
 import OrderDetails from "./components/orders/OrderDetails";
 import Home from "./components/Home";
 import ProductDetails from "./components/products/ProductDetails";
+import Dashboard from "./components/admin/Dashboard";
+import ProductsList from "./components/admin/ProductsList";
 import { loadUser } from "./actions/usersActions";
 import axios from "axios";
 
@@ -134,6 +136,24 @@ function App() {
             />
           </Routes>
         </div>
+        <Routes>
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/products"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ProductsList />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
         <Footer />
       </div>
     </Router>

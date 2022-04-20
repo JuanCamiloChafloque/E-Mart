@@ -4,6 +4,7 @@ const router = express.Router();
 // Controllers
 const {
   getProducts,
+  getAdminProducts,
   createProduct,
   getSingleProduct,
   updateSingleProduct,
@@ -23,6 +24,10 @@ router
   .route("/")
   .get(getProducts)
   .post(isAuthenticatedUser, isAuthorizedRoles("admin"), createProduct);
+
+router
+  .route("/admin")
+  .get(isAuthenticatedUser, isAuthorizedRoles("admin"), getAdminProducts);
 
 router
   .route("/:id")
